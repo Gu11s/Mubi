@@ -1,4 +1,4 @@
-package com.gdevs.Mubi.presentation.ui.theme
+package com.gdevs.mubi.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

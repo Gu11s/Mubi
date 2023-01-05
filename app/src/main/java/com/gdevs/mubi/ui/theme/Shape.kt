@@ -1,4 +1,4 @@
-package com.gdevs.Mubi.presentation.ui.theme
+package com.gdevs.mubi.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
