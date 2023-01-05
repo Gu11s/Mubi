@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Mubi</string>
+    <string name="activity_login">Login</string>
+</resources>
