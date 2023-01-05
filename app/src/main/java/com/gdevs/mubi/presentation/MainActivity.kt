@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.gdevs.mubi.presentation.navigation.AppNavigation
 import com.gdevs.mubi.presentation.ui.theme.MubiTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +15,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MubiTheme {
                 Surface{
-                    Greeting("Android")
+//                    Greeting("Android")
+                    AppNavigation()
                 }
             }
         }
