@@ -1,4 +1,4 @@
-package com.gdevs.mubi.ui.theme
+package com.gdevs.mubi.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
