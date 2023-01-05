@@ -3,10 +3,10 @@ package com.gdevs.mubi
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.gdevs.Mubi.presentation.ui.theme.MubiTheme
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.gdevs.mubi.ui.theme.MubiTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
