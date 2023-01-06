@@ -1,5 +1,6 @@
 package com.gdevs.mubi.presentation.popularshow
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,9 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import coil.request.ImageRequest
 import com.gdevs.mubi.domain.model.TvShowModel
 import com.gdevs.mubi.presentation.components.RatingBar
+import com.gdevs.mubi.presentation.navigation.AppScreens
 import com.google.accompanist.coil.CoilImage
 
 @Composable
@@ -102,7 +105,12 @@ fun TvShowEntry(
         modifier = Modifier
             .width(175.dp)
             .height(216.dp)
-            .padding(bottom = 8.dp),
+            .padding(bottom = 8.dp)
+            .clickable {
+                       navController.navigate(
+                           AppScreens.DetailScreen.route
+                       )
+            },
         shape = RoundedCornerShape(10.dp),
         elevation = 10.dp,
     ) {
