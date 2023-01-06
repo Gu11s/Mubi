@@ -1,7 +1,5 @@
 package com.gdevs.mubi.presentation.popularshow
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import coil.request.ImageRequest
 import com.gdevs.mubi.domain.model.TvShowModel
+import com.gdevs.mubi.presentation.components.RatingBar
 import com.google.accompanist.coil.CoilImage
 
 @Composable
@@ -32,7 +31,8 @@ fun PopularListScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().background(color = Color.Cyan)
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -60,7 +60,7 @@ fun PopularList(
     val isLoading by remember { viewModel.isLoading }
 
     LazyColumn( //is recyclerview
-        modifier = Modifier.background(color = Color.Yellow)
+        contentPadding = PaddingValues(8.dp)
     ) {
         val itemCount = if (tvShowList.size % 2 == 0) {
             tvShowList.size / 2
@@ -80,7 +80,6 @@ fun PopularList(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .fillMaxWidth()
     ) {
         if (isLoading) {
             CircularProgressIndicator(color = MaterialTheme.colors.primary)
@@ -99,58 +98,56 @@ fun TvShowEntry(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-
-    Column(
+    Card(
         modifier = Modifier
+            .width(175.dp)
             .height(216.dp)
-            .width(156.dp)
-            .background(Color.Magenta),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(bottom = 8.dp),
+        shape = RoundedCornerShape(10.dp),
+        elevation = 10.dp,
     ) {
-        Card(
-            modifier = Modifier
-                .width(156.dp)
-                .height(216.dp),
-            shape = RoundedCornerShape(10.dp),
-            backgroundColor = Color.Red,
-            elevation = 1.dp
-        ) {
 
-            Column(modifier = Modifier.background(color = Color.Black)
+        Column {
+            CoilImage(
+                request = ImageRequest.Builder(LocalContext.current)
+                    .data("https://image.tmdb.org/t/p/w220_and_h330_face" + entry.poster)
+                    .build(),
+                contentDescription = entry.name,
+                fadeIn = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(136.dp)
+                    .weight(0.6f),
+                alignment = Alignment.Center,
+                contentScale = ContentScale.Crop
             ) {
-                CoilImage(
-                    request = ImageRequest.Builder(LocalContext.current)
-                        .data("https://image.tmdb.org/t/p/w220_and_h330_face" + entry.poster)
-                        .build(),
-                    contentDescription = entry.name,
-                    fadeIn = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(136.dp).weight(0.6f),
-                    alignment = Alignment.Center,
-                    contentScale = ContentScale.Crop
-                ) {
-                    CircularProgressIndicator(
-                        color = MaterialTheme.colors.primary,
-                        modifier = Modifier.scale(0.1f)
-                    )
-                }
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .weight(0.3f)
-                        .background(color = Color.Green),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = entry.name, fontSize = MaterialTheme.typography.subtitle2.fontSize)
-                    Text(text = entry.rate)
-                }
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier.scale(0.6f)
+                )
             }
 
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .weight(0.3f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = entry.name, style = MaterialTheme.typography.body2)
+
+                Row()
+                {
+                    RatingBar(rating = entry.rate.toFloat(), spaceBetween = 2.dp)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = (entry.rate.toFloat() / 2f).toString(),
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+            }
         }
+
     }
 }
 
@@ -163,8 +160,7 @@ fun TvShowRow(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color.Blue),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row {
@@ -184,7 +180,6 @@ fun TvShowRow(
                 Spacer(modifier = Modifier.weight(1f))
             }
         }
-        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
