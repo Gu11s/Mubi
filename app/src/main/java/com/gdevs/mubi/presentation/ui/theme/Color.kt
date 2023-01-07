@@ -18,7 +18,7 @@ val LightBlue = Color(0xFF32B4FF)
 val Black = Color(0xFF25294A)
 val Background = Color(0xFFF0F2F5)
 val White = Color(0xFFFBFAFE)
-val Text = Color(0xFF6B6B83)
+val TextColor = Color(0xFF6B6B83)
 val SubtleText = Color(0xFF8C8CA1)
 val Gray = Color(0xFFD5D8DB)
 

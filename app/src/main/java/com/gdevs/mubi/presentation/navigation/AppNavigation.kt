@@ -22,11 +22,23 @@ fun AppNavigation() {
         composable(AppScreens.SplashScreen.route) {
             SplashScreen(navController)
         }
-        composable(AppScreens.PopularListScreen.route){
+        composable(AppScreens.PopularListScreen.route) {
             PopularListScreen(navController)
         }
-       composable(AppScreens.DetailScreen.route){
-           DetailScreen()
-       }
+        composable(AppScreens.DetailScreen.route + "/{showId}",
+            arguments = listOf(
+                navArgument("showId") {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            val showId = remember {
+                it.arguments?.getInt("showId")
+            }
+            DetailScreen(
+                showId = showId,
+                navController = navController
+            )
+        }
     }
 }

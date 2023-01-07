@@ -107,9 +107,9 @@ fun TvShowEntry(
             .height(216.dp)
             .padding(bottom = 8.dp)
             .clickable {
-                       navController.navigate(
-                           AppScreens.DetailScreen.route
-                       )
+                navController.navigate(
+                    AppScreens.DetailScreen.route + "/${entry.id}"
+                )
             },
         shape = RoundedCornerShape(10.dp),
         elevation = 10.dp,
