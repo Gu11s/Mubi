@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import coil.request.ImageRequest
+import com.gdevs.mubi.R
 import com.gdevs.mubi.common.Resource
 import com.gdevs.mubi.data.remote.dto.Season
 import com.gdevs.mubi.data.remote.dto.TvShowDetailDto
@@ -57,13 +60,37 @@ fun SeasonScreen(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(
+                            onClick = {
+                                navController.popBackStack()
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "back"
+                            )
+                        }
+                    },
+                    title = {
+                        Text("Season $seasonNumber")
+                    }
+                )
+
+            }
         ) {
-            SeasonDetailStateWrapper(
-                seasonInfo = seasonInfo
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                SeasonDetailStateWrapper(
+                    seasonInfo = seasonInfo
+                )
+            }
         }
     }
 
@@ -79,9 +106,7 @@ fun SeasonDetailStateWrapper(
     when (seasonInfo) {
         is Resource.Success -> {
             SeasonDetailSection(
-                seasonInfo = seasonInfo.data!!,
-                modifier = modifier
-                    .offset(y = (20).dp)
+                seasonInfo = seasonInfo.data!!
             )
         }
         is Resource.Error -> {
@@ -134,7 +159,9 @@ fun SeasonDetailEpisodesSection(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp)
+                        .padding(bottom = 8.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    elevation = 1.dp,
                 ) {
                     Row {
                         CoilImage(

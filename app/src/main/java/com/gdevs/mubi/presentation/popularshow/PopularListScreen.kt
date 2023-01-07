@@ -1,10 +1,15 @@
 package com.gdevs.mubi.presentation.popularshow
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,14 +17,18 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import coil.request.ImageRequest
+import com.gdevs.mubi.R
 import com.gdevs.mubi.domain.model.TvShowModel
 import com.gdevs.mubi.presentation.components.RatingBar
 import com.gdevs.mubi.presentation.navigation.AppScreens
@@ -29,26 +38,62 @@ import com.google.accompanist.coil.CoilImage
 fun PopularListScreen(
     navController: NavController
 ) {
+
+    val contextForToast = LocalContext.current.applicationContext
+
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text("Tv Shows")
+                    },
+                    actions = {
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Filled.Search,
+                                contentDescription = "search",
+                                tint = Color.White
+                            )
+
+                        }
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Filled.AccountCircle,
+                                contentDescription = "profile",
+                                tint = Color.White
+                            )
+
+                        }
+                    }
+                )
+
+            }
         ) {
-            Spacer(modifier = Modifier.height(20.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+//            Spacer(modifier = Modifier.height(20.dp))
 
-            Text(
-                text = "Popular Shows", fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
+                Text(
+                    text = "Chips", fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-            PopularList(navController = navController)
+
+
+                PopularList(navController = navController)
+            }
         }
+
     }
 }
 

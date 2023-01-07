@@ -54,11 +54,35 @@ fun DetailScreen(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(
+                            onClick = {
+                                navController.popBackStack()
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "back"
+                            )
+                        }
+                    },
+                    title = {
+                        Text("Nombre de programa")
+                    }
+                )
+
+            }
         ) {
-            Details(showId = showId, navController = navController, viewModel = viewModel)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Details(showId = showId, navController = navController, viewModel = viewModel)
+            }
         }
     }
 
