@@ -46,8 +46,6 @@ import java.util.*
 fun DetailScreen(
     showId: Int?,
     navController: NavController,
-    topPadding: Dp = 20.dp,
-    showImageSize: Dp = 200.dp,
     viewModel: ShowDetailViewModel = hiltNavGraphViewModel()
 ) {
 
@@ -105,7 +103,7 @@ fun HeaderSection() {
         )
 
         Text(
-            text = "Philipp Lackner",
+            text = "Show Title",
             fontSize = 24.sp,
             modifier = Modifier.layoutId("username"),
             color = Color.White
@@ -176,7 +174,11 @@ fun ShowDetailSection(
             color = TextColor,
             fontStyle = MaterialTheme.typography.body2.fontStyle
         )
-        ShowDetailSeasonSection(seasons = showInfo.seasons, showId = showId, navController = navController)
+        ShowDetailSeasonSection(
+            seasons = showInfo.seasons,
+            showId = showId,
+            navController = navController
+        )
 
     }
 }
@@ -205,9 +207,7 @@ fun ShowDetailSeasonSection(
                             )
                         }
                 ) {
-                    Row(
-//                        modifier = Modifier.padding(bottom = 8.dp)
-                    ) {
+                    Row {
                         CoilImage(
                             request = ImageRequest.Builder(LocalContext.current)
                                 .data("https://image.tmdb.org/t/p/w220_and_h330_face" + season.posterPath)
@@ -232,6 +232,9 @@ fun ShowDetailSeasonSection(
                                 .weight(0.7f)
                                 .padding(start = 8.dp)
                         ) {
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
                             Text(
                                 text = season.name,
                                 color = TextColor,
@@ -255,41 +258,14 @@ fun ShowDetailSeasonSection(
                                 fontSize = 14.sp,
                                 style = MaterialTheme.typography.body2
                             )
+
+                            Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
                 }
 
 
             }
-        }
-    }
-}
-
-
-@Composable
-fun ShowDetailSeasonData(
-    showInfo: TvShowDetailDto,
-    seasons: List<Season>
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(16.dp)
-    ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 8.dp)
-                .clip(CircleShape)
-                .background(if (showInfo.inProduction) MaterialTheme.colors.primary else MaterialTheme.colors.error)
-                .height(35.dp)
-        ) {
-            Text(
-                text = "Latest season: ${seasons.last().name}",
-                color = Color.White,
-                fontSize = 18.sp
-            )
         }
     }
 }
