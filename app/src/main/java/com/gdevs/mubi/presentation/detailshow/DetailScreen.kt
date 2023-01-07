@@ -28,12 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import coil.request.ImageRequest
 import com.gdevs.mubi.R
 import com.gdevs.mubi.common.Resource
 import com.gdevs.mubi.data.remote.dto.CreatedBy
 import com.gdevs.mubi.data.remote.dto.Season
 import com.gdevs.mubi.data.remote.dto.TvShowDetailDto
+import com.gdevs.mubi.presentation.navigation.AppScreens
 import com.gdevs.mubi.presentation.popularshow.PopularList
 import com.gdevs.mubi.presentation.ui.theme.Primary
 import com.gdevs.mubi.presentation.ui.theme.TextColor
@@ -42,7 +44,6 @@ import java.util.*
 
 @Composable
 fun DetailScreen(
-//    dominantColor: Color,
     showId: Int?,
     navController: NavController,
     topPadding: Dp = 20.dp,
@@ -59,7 +60,7 @@ fun DetailScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Details(showId = showId, viewModel = viewModel)
+            Details(showId = showId, navController = navController, viewModel = viewModel)
         }
     }
 
@@ -68,6 +69,7 @@ fun DetailScreen(
 @Composable
 fun Details(
     showId: Int?,
+    navController: NavController,
     viewModel: ShowDetailViewModel
 ) {
 
@@ -77,7 +79,7 @@ fun Details(
 
     HeaderSection()
 
-    ShowDetailStateWrapper(showInfo = showInfo)
+    ShowDetailStateWrapper(showId = showId, navController = navController, showInfo = showInfo)
 }
 
 @Composable
@@ -113,6 +115,8 @@ fun HeaderSection() {
 
 @Composable
 fun ShowDetailStateWrapper(
+    showId: Int?,
+    navController: NavController,
     showInfo: Resource<TvShowDetailDto>,
     modifier: Modifier = Modifier,
     loadingModifier: Modifier = Modifier
@@ -120,6 +124,8 @@ fun ShowDetailStateWrapper(
     when (showInfo) {
         is Resource.Success -> {
             ShowDetailSection(
+                showId = showId,
+                navController = navController,
                 showInfo = showInfo.data!!,
                 modifier = modifier
                     .offset(y = (-20).dp)
@@ -143,6 +149,8 @@ fun ShowDetailStateWrapper(
 
 @Composable
 fun ShowDetailSection(
+    showId: Int?,
+    navController: NavController,
     showInfo: TvShowDetailDto,
     modifier: Modifier = Modifier
 ) {
@@ -168,14 +176,16 @@ fun ShowDetailSection(
             color = TextColor,
             fontStyle = MaterialTheme.typography.body2.fontStyle
         )
-        ShowDetailSeasonSection(seasons = showInfo.seasons)
+        ShowDetailSeasonSection(seasons = showInfo.seasons, showId = showId, navController = navController)
 
     }
 }
 
 @Composable
 fun ShowDetailSeasonSection(
-    seasons: List<Season>
+    showId: Int?,
+    seasons: List<Season>,
+    navController: NavController
 ) {
     Column(
         horizontalAlignment = Alignment.Start,
@@ -189,6 +199,11 @@ fun ShowDetailSeasonSection(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 8.dp)
+                        .clickable {
+                            navController.navigate(
+                                AppScreens.SeasonScreen.route + "/${showId}/${season.seasonNumber}"
+                            )
+                        }
                 ) {
                     Row(
 //                        modifier = Modifier.padding(bottom = 8.dp)

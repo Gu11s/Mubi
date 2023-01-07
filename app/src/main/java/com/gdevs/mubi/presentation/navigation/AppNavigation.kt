@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gdevs.mubi.presentation.SplashScreen
 import com.gdevs.mubi.presentation.detailshow.DetailScreen
 import com.gdevs.mubi.presentation.popularshow.PopularListScreen
+import com.gdevs.mubi.presentation.season.SeasonScreen
 
 @Composable
 fun AppNavigation() {
@@ -37,6 +38,28 @@ fun AppNavigation() {
             }
             DetailScreen(
                 showId = showId,
+                navController = navController
+            )
+        }
+        composable(AppScreens.SeasonScreen.route + "/{showId}/{seasonNumber}",
+            arguments = listOf(
+                navArgument("showId") {
+                    type = NavType.IntType
+                },
+                navArgument("seasonNumber") {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            val showId = remember {
+                it.arguments?.getInt("showId")
+            }
+            val seasonNumber = remember{
+                it.arguments?.getInt("seasonNumber")
+            }
+            SeasonScreen(
+                showId = showId,
+                seasonNumber = seasonNumber,
                 navController = navController
             )
         }
