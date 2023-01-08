@@ -1,23 +1,29 @@
 package com.gdevs.mubi.data.remote.dto
 
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "show_table")
 data class TvShowDetailDto(
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("backdrop_path")
     val backdropPath: String,
-    @SerializedName("created_by")
-    val createdBy: List<CreatedBy>,
-    @SerializedName("episode_run_time")
-    val episodeRunTime: List<Any>,
+//    @SerializedName("created_by")
+//    val createdBy: List<CreatedBy>,
+//    @SerializedName("episode_run_time")
+//    val episodeRunTime: List<Any>,
     @SerializedName("first_air_date")
     val firstAirDate: String,
-    @SerializedName("genres")
-    val genres: List<Genre>,
+//    @SerializedName("genres")
+//    val genres: List<Genre>,
     @SerializedName("homepage")
     val homepage: String,
+    @PrimaryKey
+    @ColumnInfo(name = "show_id")
     @SerializedName("id")
     val id: Int,
     @SerializedName("in_production")
@@ -26,14 +32,14 @@ data class TvShowDetailDto(
     val languages: List<String>,
     @SerializedName("last_air_date")
     val lastAirDate: String,
-    @SerializedName("last_episode_to_air")
-    val lastEpisodeToAir: LastEpisodeToAir,
+//    @SerializedName("last_episode_to_air")
+//    val lastEpisodeToAir: LastEpisodeToAir,
     @SerializedName("name")
     val name: String,
-    @SerializedName("networks")
-    val networks: List<Network>,
-    @SerializedName("next_episode_to_air")
-    val nextEpisodeToAir: Any,
+//    @SerializedName("networks")
+////    val networks: List<Network>,
+//    @SerializedName("next_episode_to_air")
+//    val nextEpisodeToAir: Any,
     @SerializedName("number_of_episodes")
     val numberOfEpisodes: Int,
     @SerializedName("number_of_seasons")
@@ -50,14 +56,14 @@ data class TvShowDetailDto(
     val popularity: Double,
     @SerializedName("poster_path")
     val posterPath: String,
-    @SerializedName("production_companies")
-    val productionCompanies: List<ProductionCompany>,
-    @SerializedName("production_countries")
-    val productionCountries: List<ProductionCountry>,
+//    @SerializedName("production_companies")
+//    val productionCompanies: List<ProductionCompany>,
+//    @SerializedName("production_countries")
+//    val productionCountries: List<ProductionCountry>,
     @SerializedName("seasons")
     val seasons: List<Season>,
-    @SerializedName("spoken_languages")
-    val spokenLanguages: List<SpokenLanguage>,
+//    @SerializedName("spoken_languages")
+//    val spokenLanguages: List<SpokenLanguage>,
     @SerializedName("status")
     val status: String,
     @SerializedName("tagline")
