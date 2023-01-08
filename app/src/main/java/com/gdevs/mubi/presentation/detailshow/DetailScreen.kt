@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
@@ -39,6 +40,7 @@ import com.gdevs.mubi.presentation.navigation.AppScreens
 import com.gdevs.mubi.presentation.popularshow.PopularList
 import com.gdevs.mubi.presentation.ui.theme.Primary
 import com.gdevs.mubi.presentation.ui.theme.TextColor
+import com.gdevs.mubi.presentation.ui.theme.WhiteText
 import com.google.accompanist.coil.CoilImage
 import java.util.*
 
@@ -48,34 +50,33 @@ fun DetailScreen(
     navController: NavController,
     viewModel: ShowDetailViewModel = hiltNavGraphViewModel()
 ) {
-
-
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
     ) {
 
         Scaffold(
-            topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(
-                            onClick = {
-                                navController.popBackStack()
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "back"
-                            )
-                        }
-                    },
-                    title = {
-                        Text("Nombre de programa")
-                    }
-                )
-
-            }
+//            topBar = {
+//                TopAppBar(
+//                    navigationIcon = {
+//                        IconButton(
+//                            onClick = {
+//                                navController.popBackStack()
+//                            }
+//                        ) {
+//                            Icon(
+//                                imageVector = Icons.Filled.ArrowBack,
+//                                contentDescription = "back"
+//                            )
+//                        }
+//                    },
+//                    title = {
+//                        Text("Nombre de programa")
+//                    },
+//                    backgroundColor = Color.Transparent
+//                )
+//
+//            }
         ) {
             Column(
                 modifier = Modifier
@@ -99,7 +100,7 @@ fun Details(
         value = viewModel.getShowInfo(showId)
     }.value
 
-    HeaderSection()
+//    HeaderSection()
 
     ShowDetailStateWrapper(showId = showId, navController = navController, showInfo = showInfo)
 }
@@ -148,9 +149,7 @@ fun ShowDetailStateWrapper(
             ShowDetailSection(
                 showId = showId,
                 navController = navController,
-                showInfo = showInfo.data!!,
-                modifier = modifier
-                    .offset(y = (-20).dp)
+                showInfo = showInfo.data!!
             )
         }
         is Resource.Error -> {
@@ -177,33 +176,79 @@ fun ShowDetailSection(
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
+
     Column(
-        horizontalAlignment = Alignment.Start,
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
-            .padding(8.dp)
     ) {
-        Text(
-            text = "Summary",
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-            color = Primary,
-            fontStyle = MaterialTheme.typography.h6.fontStyle
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            CoilImage(
+                request = ImageRequest.Builder(LocalContext.current)
+                    .data("https://image.tmdb.org/t/p/w220_and_h330_face" + showInfo.posterPath)
+                    .build(),
+                contentDescription = showInfo.name,
+                fadeIn = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(232.dp),
+                alignment = Alignment.CenterStart,
+                contentScale = ContentScale.Crop
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier.scale(0.6f)
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp),
+                contentAlignment = Alignment.BottomStart
+            ) {
+//                Column(
+//                    modifier = Modifier.background(color = Color.Red)
+//                ) {
+                    Text(
+                        text = showInfo.name,
+                        fontWeight = FontWeight.Bold,
+                        color = WhiteText,
+                        style = MaterialTheme.typography.h4,
+                    )
+//                }
+            }
+        }
 
-        Text(
-            text = showInfo.overview,
-            textAlign = TextAlign.Start,
-            color = TextColor,
-            fontStyle = MaterialTheme.typography.body2.fontStyle
-        )
-        ShowDetailSeasonSection(
-            seasons = showInfo.seasons,
-            showId = showId,
-            navController = navController
-        )
+        Column(
+//            horizontalAlignment = Alignment.Start,
+            modifier = modifier
+                .fillMaxSize()
+//                .verticalScroll(scrollState)
+                .padding(8.dp)
+        ) {
+            Text(
+                text = "Summary",
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+                color = Primary,
+                fontStyle = MaterialTheme.typography.h6.fontStyle
+            )
 
+            Text(
+                text = showInfo.overview,
+                textAlign = TextAlign.Start,
+                color = TextColor,
+                fontStyle = MaterialTheme.typography.body2.fontStyle
+            )
+            ShowDetailSeasonSection(
+                seasons = showInfo.seasons,
+                showId = showId,
+                navController = navController
+            )
+        }
     }
 }
 
@@ -216,7 +261,6 @@ fun ShowDetailSeasonSection(
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .padding(8.dp)
             .fillMaxWidth()
     ) {
         for (season in seasons) {
