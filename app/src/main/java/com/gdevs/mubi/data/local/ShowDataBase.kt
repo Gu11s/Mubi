@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.gdevs.mubi.data.remote.dto.Result
 import com.gdevs.mubi.data.remote.dto.TvShowDetailDto
 
 @Database(
-    entities = [TvShowDetailDto::class],
+    entities = [Result::class],
     version = 1,
     exportSchema = false
 )

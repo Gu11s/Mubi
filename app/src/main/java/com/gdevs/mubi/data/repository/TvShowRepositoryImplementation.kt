@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import com.gdevs.mubi.common.Resource
 import com.gdevs.mubi.data.local.ShowDao
 import com.gdevs.mubi.data.remote.TmdbApi
+import com.gdevs.mubi.data.remote.dto.Result
 import com.gdevs.mubi.data.remote.dto.TvShowDetailDto
 import com.gdevs.mubi.data.remote.dto.TvShowDto
 import com.gdevs.mubi.data.remote.dto.season.SeasonDto
@@ -45,7 +46,7 @@ class TvShowRepositoryImplementation @Inject constructor(
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(show: TvShowDetailDto) {
+    suspend fun insert(vararg show: Result) {
         showDao.insert(show = show)
     }
 }

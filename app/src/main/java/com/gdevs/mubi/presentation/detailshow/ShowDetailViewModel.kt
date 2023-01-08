@@ -19,13 +19,13 @@ class ShowDetailViewModel @Inject constructor(
     suspend fun getShowInfo(showId: Int?): Resource<TvShowDetailDto> {
         Log.d("TV RESULT ID", showId.toString())
         val response = repository.getShowInfo(showId = showId)
-        insert(response.data!!)
+//        insert(response.data!!)
         return response
     }
 
-    fun insert(show: TvShowDetailDto) = viewModelScope.launch {
-        repository.insert(show)
-    }
+//    fun insert(show: TvShowDetailDto) = viewModelScope.launch {
+//        repository.insert(show)
+//    }
 
 }
 

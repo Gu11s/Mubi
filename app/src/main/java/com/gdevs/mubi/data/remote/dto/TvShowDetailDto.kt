@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "show_table")
+//@Entity(tableName = "show_detail")
 data class TvShowDetailDto(
     @SerializedName("adult")
     val adult: Boolean,

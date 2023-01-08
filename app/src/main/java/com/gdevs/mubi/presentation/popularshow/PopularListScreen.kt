@@ -187,11 +187,11 @@ fun TvShowEntry(
                     .weight(0.3f),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = entry.name, style = MaterialTheme.typography.body2)
+                Text(text = entry.name.toString(), style = MaterialTheme.typography.body2)
 
                 Row()
                 {
-                    RatingBar(rating = entry.rate.toFloat(), spaceBetween = 2.dp)
+                    RatingBar(rating = entry.rate!!.toFloat(), spaceBetween = 2.dp)
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = (entry.rate.toFloat() / 2f).toString(),
