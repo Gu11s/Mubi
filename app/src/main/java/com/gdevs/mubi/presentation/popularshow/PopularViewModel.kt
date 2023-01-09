@@ -1,5 +1,6 @@
 package com.gdevs.mubi.presentation.popularshow
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,14 +8,17 @@ import com.gdevs.mubi.common.Constants.PAGE_SIZE
 import com.gdevs.mubi.common.Resource
 import com.gdevs.mubi.data.repository.TvShowRepositoryImplementation
 import com.gdevs.mubi.domain.model.TvShowModel
+import com.gdevs.mubi.presentation.components.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PopularViewModel @Inject constructor(
     private val repository: TvShowRepositoryImplementation
-): ViewModel() {
+) : ViewModel() {
 
     private var currentPage = 1
 
@@ -23,14 +27,18 @@ class PopularViewModel @Inject constructor(
     var isLoading = mutableStateOf(false)
     var endReached = mutableStateOf(false)
 
+    private val newTvShowList = MutableStateFlow<List<TvShowModel>>(listOf())
+    val againTvShowList = newTvShowList.asStateFlow()
+
     init {
-        loadTvShowPaginated()
+        loadTvShowPaginated(category = Category.POPULAR.value)
     }
 
-    fun loadTvShowPaginated() {
+    fun loadTvShowPaginated(category: String) {
+        Log.e("TV SHOW PAGINATED VIEWMODEL", category)
         viewModelScope.launch {
             isLoading.value = true
-            val result = repository.getTvPopular(currentPage)
+            val result = repository.getTvPopular(currentPage, category)
             when (result) {
                 is Resource.Success -> {
                     endReached.value = currentPage * PAGE_SIZE >= result.data!!.totalResults
@@ -57,6 +65,18 @@ class PopularViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun topRated() {
+        Log.e("ViewModel", "TOP RATED")
+    }
+
+    fun airing() {
+        Log.e("ViewModel", "AIRING")
+    }
+
+    fun onTv(category: Category?) {
+        Log.e("ViewModel", category?.value.toString())
     }
 
 }

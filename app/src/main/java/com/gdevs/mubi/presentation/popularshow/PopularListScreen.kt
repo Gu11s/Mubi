@@ -1,9 +1,16 @@
 package com.gdevs.mubi.presentation.popularshow
 
+import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,31 +22,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import coil.request.ImageRequest
-import com.gdevs.mubi.R
 import com.gdevs.mubi.domain.model.TvShowModel
+import com.gdevs.mubi.presentation.components.Category
+import com.gdevs.mubi.presentation.components.ChipGroup
 import com.gdevs.mubi.presentation.components.RatingBar
+import com.gdevs.mubi.presentation.components.getCategory
 import com.gdevs.mubi.presentation.navigation.AppScreens
 import com.google.accompanist.coil.CoilImage
 
 @Composable
 fun PopularListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: PopularViewModel = hiltNavGraphViewModel()
 ) {
 
-    val contextForToast = LocalContext.current.applicationContext
+    val selectedCategory: MutableState<Category?> = mutableStateOf(null)
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -78,21 +84,32 @@ fun PopularListScreen(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-//            Spacer(modifier = Modifier.height(20.dp))
 
-                Text(
-                    text = "Chips", fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                ChipGroup(
+                    onSelectedChanged = {
+                        selectedCategory.value = getCategory(it)
+                        viewModel.loadTvShowPaginated(category = it)
+                    }
                 )
 
+                Log.e("Category name", selectedCategory.value.toString())
+//                PopularList(navController = navController, category = "popular")
+                val categorySelected = selectedCategory.value.toString()
+                when (categorySelected) {
+                    "RATED" -> PopularList(navController = navController, category = "top_rated")
+                    "ONTV" -> PopularList(navController = navController, category = "on_the_air")
+                    "AIRING" -> PopularList(
+                        navController = navController,
+                        category = "airing_today"
+                    )
+                    else -> PopularList(navController = navController, category = "popular")
 
+                }
 
-                PopularList(navController = navController)
+//                PopularList(navController = navController)
             }
         }
 
@@ -102,8 +119,10 @@ fun PopularListScreen(
 @Composable
 fun PopularList(
     navController: NavController,
-    viewModel: PopularViewModel = hiltNavGraphViewModel()
+    viewModel: PopularViewModel = hiltNavGraphViewModel(),
+    category: String
 ) {
+    Log.e("CATEGORY IS", category)
     val tvShowList by remember { viewModel.tvShowList }
     val endReached by remember { viewModel.endReached }
     val loadError by remember { viewModel.loadError }
@@ -120,7 +139,7 @@ fun PopularList(
 
         items(itemCount) {
             if (it >= itemCount - 1 && !endReached && !isLoading) {//PAGINATE
-                viewModel.loadTvShowPaginated()
+                viewModel.loadTvShowPaginated(category = category)
             }
             TvShowRow(rowIndex = it, entries = tvShowList, navController = navController)
         }
@@ -136,7 +155,7 @@ fun PopularList(
         }
         if (loadError.isNotEmpty()) {
             RetrySection(error = loadError) {
-                viewModel.loadTvShowPaginated()
+                viewModel.loadTvShowPaginated(category = category)
             }
         }
     }
@@ -189,11 +208,11 @@ fun TvShowEntry(
                     .weight(0.3f),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = entry.name, style = MaterialTheme.typography.body2)
+                entry.name?.let { Text(text = it, style = MaterialTheme.typography.body2) }
 
                 Row()
                 {
-                    RatingBar(rating = entry.rate.toFloat(), spaceBetween = 2.dp)
+                    RatingBar(rating = entry.rate!!.toFloat(), spaceBetween = 2.dp)
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = (entry.rate.toFloat() / 2f).toString(),

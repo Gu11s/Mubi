@@ -13,9 +13,9 @@ class TvShowRepositoryImplementation @Inject constructor(
     private val api: TmdbApi
 ) {
 
-    suspend fun getTvPopular(page: Int): Resource<TvShowDto> {
+    suspend fun getTvPopular(page: Int, category: String): Resource<TvShowDto> {
         val response = try {
-            api.getTvPopular(page = page)
+            api.getTvPopular(page = page, category = category)
         } catch (e: Exception) {
             return Resource.Error("An unknown error occurred.")
         }
