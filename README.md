@@ -1,4 +1,4 @@
-# Mubi
+# Mubi - Applaudo’s Code Challenge Android
 
 ## Retrievement of TmDb api
 
