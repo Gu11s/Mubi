@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "295475815839",
+    "project_id": "mubi-1c285",
+    "storage_bucket": "mubi-1c285.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295475815839:android:0c290c9bf93d3d378f09aa",
+        "android_client_info": {
+          "package_name": "com.gdevs.Mubi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295475815839-7jf1v2mkv4ljr41te5fr8qjs3h1kfutv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOvgDM-5QArJD4VukyBDVQQnPhXVAfI-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295475815839-7jf1v2mkv4ljr41te5fr8qjs3h1kfutv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
