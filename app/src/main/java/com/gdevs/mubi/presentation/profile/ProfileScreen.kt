@@ -86,7 +86,7 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.size(8.dp))
 
-                Logout()
+                Logout(navController = navController)
 
             }
 
@@ -200,7 +200,9 @@ fun MyFavoritesShows() {
 }
 
 @Composable
-fun Logout() {
+fun Logout(
+    navController: NavController
+) {
 
     var show by rememberSaveable { mutableStateOf(false) }
 
@@ -223,7 +225,13 @@ fun Logout() {
 
     }
 
-    Dialog(show, { show = false }, {})
+    Dialog(
+        show,
+        { show = false },
+        {
+            navController.popBackStack()
+            navController.navigate(AppScreens.LoginScreen.route)
+        })
 }
 
 @Composable
