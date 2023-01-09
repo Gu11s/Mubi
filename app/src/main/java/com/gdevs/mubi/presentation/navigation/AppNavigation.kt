@@ -1,5 +1,6 @@
 package com.gdevs.mubi.presentation.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -11,12 +12,15 @@ import androidx.navigation.compose.rememberNavController
 import com.gdevs.mubi.presentation.SplashScreen
 import com.gdevs.mubi.presentation.detailshow.DetailScreen
 import com.gdevs.mubi.presentation.login.LoginScreen
+import com.gdevs.mubi.presentation.login.LoginViewModel
 import com.gdevs.mubi.presentation.popularshow.PopularListScreen
 import com.gdevs.mubi.presentation.profile.ProfileScreen
 import com.gdevs.mubi.presentation.season.SeasonScreen
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    context: Context
+) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -26,7 +30,7 @@ fun AppNavigation() {
             SplashScreen(navController)
         }
         composable(AppScreens.LoginScreen.route){
-            LoginScreen(navController)
+            LoginScreen(navController, LoginViewModel(), context)
         }
         composable(AppScreens.PopularListScreen.route) {
             PopularListScreen(navController)

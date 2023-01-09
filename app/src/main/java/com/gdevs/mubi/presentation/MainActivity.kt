@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.gdevs.mubi.presentation.navigation.AppNavigation
 import com.gdevs.mubi.presentation.ui.theme.MubiTheme
@@ -17,23 +18,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             MubiTheme {
                 Surface{
-//                    Greeting("Android")
-                    AppNavigation()
+                    val context = LocalContext.current
+                    AppNavigation(context)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MubiTheme {
-        Greeting("Android")
     }
 }
