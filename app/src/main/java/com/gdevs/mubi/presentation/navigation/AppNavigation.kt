@@ -10,6 +10,7 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.gdevs.mubi.presentation.SplashScreen
 import com.gdevs.mubi.presentation.detailshow.DetailScreen
+import com.gdevs.mubi.presentation.login.LoginScreen
 import com.gdevs.mubi.presentation.popularshow.PopularListScreen
 import com.gdevs.mubi.presentation.profile.ProfileScreen
 import com.gdevs.mubi.presentation.season.SeasonScreen
@@ -23,6 +24,9 @@ fun AppNavigation() {
     ) {
         composable(AppScreens.SplashScreen.route) {
             SplashScreen(navController)
+        }
+        composable(AppScreens.LoginScreen.route){
+            LoginScreen(navController)
         }
         composable(AppScreens.PopularListScreen.route) {
             PopularListScreen(navController)
