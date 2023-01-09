@@ -61,7 +61,9 @@ fun PopularListScreen(
                             )
 
                         }
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = {
+                            navController.navigate(AppScreens.ProfileScreen.route)
+                        }) {
                             Icon(
                                 imageVector = Icons.Filled.AccountCircle,
                                 contentDescription = "profile",

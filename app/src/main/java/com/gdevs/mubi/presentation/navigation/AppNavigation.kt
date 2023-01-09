@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gdevs.mubi.presentation.SplashScreen
 import com.gdevs.mubi.presentation.detailshow.DetailScreen
 import com.gdevs.mubi.presentation.popularshow.PopularListScreen
+import com.gdevs.mubi.presentation.profile.ProfileScreen
 import com.gdevs.mubi.presentation.season.SeasonScreen
 
 @Composable
@@ -54,7 +55,7 @@ fun AppNavigation() {
             val showId = remember {
                 it.arguments?.getInt("showId")
             }
-            val seasonNumber = remember{
+            val seasonNumber = remember {
                 it.arguments?.getInt("seasonNumber")
             }
             SeasonScreen(
@@ -62,6 +63,9 @@ fun AppNavigation() {
                 seasonNumber = seasonNumber,
                 navController = navController
             )
+        }
+        composable(AppScreens.ProfileScreen.route) {
+            ProfileScreen(navController)
         }
     }
 }
