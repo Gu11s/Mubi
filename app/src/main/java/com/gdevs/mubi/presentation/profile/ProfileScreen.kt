@@ -17,8 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.navigate
 import coil.request.ImageRequest
@@ -26,7 +24,6 @@ import com.gdevs.mubi.R
 import com.gdevs.mubi.presentation.components.RatingBar
 import com.gdevs.mubi.presentation.navigation.AppScreens
 import com.google.accompanist.coil.CoilImage
-import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.gdevs.mubi.presentation.ui.theme.*
 

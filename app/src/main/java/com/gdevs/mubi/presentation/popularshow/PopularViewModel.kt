@@ -27,15 +27,12 @@ class PopularViewModel @Inject constructor(
     var isLoading = mutableStateOf(false)
     var endReached = mutableStateOf(false)
 
-    private val newTvShowList = MutableStateFlow<List<TvShowModel>>(listOf())
-    val againTvShowList = newTvShowList.asStateFlow()
 
     init {
         loadTvShowPaginated(category = Category.POPULAR.value)
     }
 
     fun loadTvShowPaginated(category: String) {
-        Log.e("TV SHOW PAGINATED VIEWMODEL", category)
         viewModelScope.launch {
             isLoading.value = true
             val result = repository.getTvPopular(currentPage, category)
@@ -65,18 +62,6 @@ class PopularViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun topRated() {
-        Log.e("ViewModel", "TOP RATED")
-    }
-
-    fun airing() {
-        Log.e("ViewModel", "AIRING")
-    }
-
-    fun onTv(category: Category?) {
-        Log.e("ViewModel", category?.value.toString())
     }
 
 }

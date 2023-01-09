@@ -95,8 +95,6 @@ fun PopularListScreen(
                     }
                 )
 
-                Log.e("Category name", selectedCategory.value.toString())
-//                PopularList(navController = navController, category = "popular")
                 val categorySelected = selectedCategory.value.toString()
                 when (categorySelected) {
                     "RATED" -> PopularList(navController = navController, category = "top_rated")
@@ -108,8 +106,6 @@ fun PopularListScreen(
                     else -> PopularList(navController = navController, category = "popular")
 
                 }
-
-//                PopularList(navController = navController)
             }
         }
 
@@ -122,7 +118,6 @@ fun PopularList(
     viewModel: PopularViewModel = hiltNavGraphViewModel(),
     category: String
 ) {
-    Log.e("CATEGORY IS", category)
     val tvShowList by remember { viewModel.tvShowList }
     val endReached by remember { viewModel.endReached }
     val loadError by remember { viewModel.loadError }
