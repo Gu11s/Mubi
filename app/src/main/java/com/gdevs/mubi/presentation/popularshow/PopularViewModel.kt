@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.gdevs.mubi.common.Constants.PAGE_SIZE
 import com.gdevs.mubi.common.Resource
 import com.gdevs.mubi.data.remote.dto.Result
-import com.gdevs.mubi.data.remote.dto.TvShowDetailDto
 import com.gdevs.mubi.data.repository.TvShowRepositoryImplementation
 import com.gdevs.mubi.domain.model.TvShowModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,11 +32,10 @@ class PopularViewModel @Inject constructor(
         viewModelScope.launch {
             isLoading.value = true
             val result = repository.getTvPopular(currentPage)
-//            result.data!!.results.lastOrNull()?.let { insert(it) }
             insertShow(result.data!!.results)
             when (result) {
                 is Resource.Success -> {
-                    endReached.value = currentPage * PAGE_SIZE >= result.data!!.totalResults
+                    endReached.value = currentPage * PAGE_SIZE >= result.data.totalResults
                     val tvShowEntries = result.data.results.mapIndexed { index, entry ->
                         TvShowModel(
                             id = entry.id,
@@ -63,11 +61,8 @@ class PopularViewModel @Inject constructor(
         }
     }
 
-    fun insert(show: Result) = viewModelScope.launch {
-        repository.insert(show)
-    }
 
-    fun insertShow(list: List<Result>) = viewModelScope.launch{
+    private fun insertShow(list: List<Result>) = viewModelScope.launch{
         repository.insert(*list.toTypedArray())
     }
 
