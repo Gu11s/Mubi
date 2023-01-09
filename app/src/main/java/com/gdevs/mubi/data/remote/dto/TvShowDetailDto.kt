@@ -1,7 +1,11 @@
 package com.gdevs.mubi.data.remote.dto
 
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+
 
 data class TvShowDetailDto(
     @SerializedName("adult")
@@ -18,6 +22,8 @@ data class TvShowDetailDto(
     val genres: List<Genre>,
     @SerializedName("homepage")
     val homepage: String,
+    @PrimaryKey
+    @ColumnInfo(name = "show_id")
     @SerializedName("id")
     val id: Int,
     @SerializedName("in_production")

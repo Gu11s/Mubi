@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import coil.request.ImageRequest
+import com.gdevs.mubi.R
 import com.gdevs.mubi.domain.model.TvShowModel
 import com.gdevs.mubi.presentation.components.Category
 import com.gdevs.mubi.presentation.components.ChipGroup

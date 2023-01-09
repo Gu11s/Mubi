@@ -36,9 +36,11 @@ class PopularViewModel @Inject constructor(
         viewModelScope.launch {
             isLoading.value = true
             val result = repository.getTvPopular(currentPage, category)
+//            val result = repository.getTvPopular(currentPage)
+            insertShow(result.data!!.results)
             when (result) {
                 is Resource.Success -> {
-                    endReached.value = currentPage * PAGE_SIZE >= result.data!!.totalResults
+                    endReached.value = currentPage * PAGE_SIZE >= result.data.totalResults
                     val tvShowEntries = result.data.results.mapIndexed { index, entry ->
                         TvShowModel(
                             id = entry.id,
@@ -62,6 +64,11 @@ class PopularViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+
+    private fun insertShow(list: List<Result>) = viewModelScope.launch{
+        repository.insert(*list.toTypedArray())
     }
 
 }

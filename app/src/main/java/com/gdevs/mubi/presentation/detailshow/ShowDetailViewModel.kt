@@ -1,6 +1,5 @@
 package com.gdevs.mubi.presentation.detailshow
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.gdevs.mubi.common.Resource
 import com.gdevs.mubi.data.remote.dto.TvShowDetailDto
@@ -14,7 +13,7 @@ class ShowDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     suspend fun getShowInfo(showId: Int?): Resource<TvShowDetailDto> {
-        Log.d("TV RESULT ID", showId.toString())
         return repository.getShowInfo(showId = showId)
     }
+
 }
