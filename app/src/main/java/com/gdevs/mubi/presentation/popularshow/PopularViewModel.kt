@@ -1,17 +1,16 @@
 package com.gdevs.mubi.presentation.popularshow
 
-import android.util.Log
+
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdevs.mubi.common.Constants.PAGE_SIZE
 import com.gdevs.mubi.common.Resource
+import com.gdevs.mubi.data.remote.dto.Result
 import com.gdevs.mubi.data.repository.TvShowRepositoryImplementation
 import com.gdevs.mubi.domain.model.TvShowModel
 import com.gdevs.mubi.presentation.components.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
